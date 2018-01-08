@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.flc.first.R;
-import com.flc.framework.utils.SingletonFactory;
 
 public class MainActivity extends AppCompatActivity {
 
