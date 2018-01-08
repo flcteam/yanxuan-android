@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion rootProject.ext.complieSDKVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaVersion
+        targetCompatibility rootProject.ext.javaVersion
+    }
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSDKVersion
+        targetSdkVersion rootProject.ext.targetSDKVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    // support框架
+    api "com.android.support:design:${rootProject.supportLibraryVersion}"
+    api "com.android.support:appcompat-v7:${rootProject.supportLibraryVersion}"
+    api "com.android.support:support-v4:${rootProject.supportLibraryVersion}"
+    api "com.android.support:recyclerview-v7:${rootProject.supportLibraryVersion}"
+
+    //RxJava
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api 'io.reactivex.rxjava2:rxjava:2.1.7'
+    //Butterknife
+    api 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //Timber
+    api 'com.jakewharton.timber:timber:4.6.0'
+    //Glide
+    api 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+    //Gson
+    api 'com.google.code.gson:gson:2.8.2'
+    //Pinyin
+    api 'com.github.SilenceDut:jpinyin:v1.0'
+    //db
+    api 'org.greenrobot:greendao:3.2.2'
+    api 'com.android.support:palette-v7:27.0.2'
+}
