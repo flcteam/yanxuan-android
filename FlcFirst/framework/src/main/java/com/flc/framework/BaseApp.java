@@ -2,6 +2,9 @@ package com.flc.framework;
 
 import android.app.Application;
 
+import com.flc.framework.processor.ScreenProcessor;
+import com.flc.framework.utils.SingletonFactory;
+
 import timber.log.Timber;
 
 /**
@@ -17,6 +20,7 @@ public class BaseApp extends Application {
         super.onCreate();
         instance = this;
         Timber.plant(new Timber.DebugTree());
+        SingletonFactory.getSingleton(ScreenProcessor.class).init();
     }
 
     public static BaseApp getInstance() {

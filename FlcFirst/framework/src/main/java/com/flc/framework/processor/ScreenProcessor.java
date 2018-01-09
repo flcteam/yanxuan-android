@@ -13,6 +13,7 @@ public class ScreenProcessor {
     private static int widthPixel;
     private static int heightPixel;
     private static float density;
+    private static int[] size;
 
     public void init() {
         DisplayMetrics displayMetrics = BaseApp.getInstance().getResources().getDisplayMetrics();
@@ -22,7 +23,18 @@ public class ScreenProcessor {
     }
 
     public int[] getPortraitScreenSize() {
-        return new int[]{widthPixel, heightPixel};
+        if(null == size) {
+            size = new int[] {widthPixel, heightPixel};
+        }
+        return size;
+    }
+
+    public int getPortraitScreenWidth() {
+        return widthPixel;
+    }
+
+    public int getPotraitScreenHeight() {
+        return heightPixel;
     }
 
 }
