@@ -10,7 +10,7 @@
 
     <!-- 统一规范 -->
     <color name="highlight_red">#e91e63</color>
-
+    <color name="c333333">#333333</color>
     <color name="c757575">#757575</color>
     <color name="cf6f6f6">#f6f6f6</color>
 </resources>
