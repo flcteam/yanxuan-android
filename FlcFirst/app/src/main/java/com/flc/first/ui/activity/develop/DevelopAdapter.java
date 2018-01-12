@@ -23,7 +23,7 @@ public class DevelopAdapter extends RecyclerView.Adapter<DevelopViewHolder> {
     public DevelopViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_develop, parent, false);
-        return new DevelopViewHolder(view);
+        return new DevelopViewHolder(view).bindAdapter(this);
     }
 
     @Override

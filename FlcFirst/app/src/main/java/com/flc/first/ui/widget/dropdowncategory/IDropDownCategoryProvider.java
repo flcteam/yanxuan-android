@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface IDropDownCategoryProvider {
 
-    public List<String> getDorpDownCategoryData();
+    public List<String> getDropDownCategoryData();
 
 }

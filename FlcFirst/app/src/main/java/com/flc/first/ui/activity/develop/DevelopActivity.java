@@ -1,6 +1,7 @@
 package com.flc.first.ui.activity.develop;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,6 +50,8 @@ public class DevelopActivity extends Activity implements OnItemClickListener<Str
     public void onItemClick(int position, String s) {
         switch (s) {
             case DROP_DOWN_CATEGORY:
+                Intent dropDownCategory = new Intent(this, DropdownCategoryActivity.class);
+                startActivity(dropDownCategory);
                 break;
             default:
                 break;

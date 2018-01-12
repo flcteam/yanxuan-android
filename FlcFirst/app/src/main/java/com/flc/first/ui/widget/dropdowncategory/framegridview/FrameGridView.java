@@ -1,6 +1,7 @@
 package com.flc.first.ui.widget.dropdowncategory.framegridview;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -8,7 +9,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.flc.first.App;
 import com.flc.first.R;
@@ -17,6 +20,8 @@ import com.flc.framework.processor.DrawableColorProcessor;
 import com.flc.framework.processor.ScreenProcessor;
 import com.flc.framework.processor.SizeProcessor;
 import com.flc.framework.utils.SingletonFactory;
+
+import timber.log.Timber;
 
 /**
  * Created by channagihong on 09/01/2018.
@@ -63,6 +68,7 @@ public class FrameGridView extends FrameLayout {
 
     //============================ init ================================================
     private void init() {
+        setBackgroundColor(Color.YELLOW);
         initVars();
         onCreateView();
     }
@@ -79,7 +85,7 @@ public class FrameGridView extends FrameLayout {
         highlightFrame = SingletonFactory.getSingleton(DrawableColorProcessor.class).colorDrawable(R.drawable.round_10, R.color.highlight_red);
 
         Paint paint = new Paint();
-        paint.setTextSize(SP_SIZE_ITEM_TEXT);
+        paint.setTextSize(SingletonFactory.getSingleton(SizeProcessor.class).dp2px(SP_SIZE_ITEM_TEXT));
         Rect rect = new Rect();
         paint.getTextBounds("我", 0, 1, rect);
         itemHeight = rect.height() + 2 * textHorizontalPaddingSize;
@@ -93,13 +99,27 @@ public class FrameGridView extends FrameLayout {
     }
 
     private void onCreateView() {
-        int size = null == dataProvider.getDorpDownCategoryData() ? 0 : dataProvider.getDorpDownCategoryData().size();
-
-
+        int size = null == dataProvider.getDropDownCategoryData() ? 0 : dataProvider.getDropDownCategoryData().size();
+        for (int i = 0; i < size; i++) {
+            addItemGridView(dataProvider.getDropDownCategoryData().get(i), i);
+        }
     }
 
     private void addItemGridView(String content, int position) {
+        TextView textView = new TextView(getContext());
+        textView.setTextSize(SP_SIZE_ITEM_TEXT);
+        textView.setGravity(Gravity.CENTER);
+//        textView.setBackground(frame);
+        textView.setTextColor(colorText);
+        textView.setText(content);
 
+        int x = position % COLUMN_COUNT;
+        int y = (int) Math.floor(position / (float) COLUMN_COUNT);
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(itemWidth, itemHeight);
+        params.leftMargin = (x + 1) * horizontalPaddingSize + x * itemWidth;
+        params.topMargin = (y + 1) * verticalPaddingSize + y * itemHeight;
+        addView(textView, params);
     }
 
     //============================ override from View/ViewGroup ================================================
@@ -107,6 +127,7 @@ public class FrameGridView extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Timber.d("onMeasure(%d, %d)", measuredWidth, measuredHeight);
         setMeasuredDimension(measuredWidth, measuredHeight);
         getLayoutParams().width = measuredWidth;
         getLayoutParams().height = measuredHeight;
@@ -114,6 +135,6 @@ public class FrameGridView extends FrameLayout {
 
     //============================ getters and setters ================================================
     private int getCount() {
-        return null == dataProvider || null == dataProvider.getDorpDownCategoryData() ? 0 : dataProvider.getDorpDownCategoryData().size();
+        return null == dataProvider || null == dataProvider.getDropDownCategoryData() ? 0 : dataProvider.getDropDownCategoryData().size();
     }
 }

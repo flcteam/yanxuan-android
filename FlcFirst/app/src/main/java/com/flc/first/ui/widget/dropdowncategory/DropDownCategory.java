@@ -3,7 +3,6 @@ package com.flc.first.ui.widget.dropdowncategory;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
@@ -61,6 +60,6 @@ public class DropDownCategory extends FrameLayout {
         int screenWidth = SingletonFactory.getSingleton(ScreenProcessor.class).getPortraitScreenWidth();
 
         recyclerView = new RecyclerView(getContext());
-        FrameLayout.LayoutParams params = new FrameLayout()
+//        FrameLayout.LayoutParams params = new FrameLayout()
     }
 }
