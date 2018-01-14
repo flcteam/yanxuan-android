@@ -18,6 +18,14 @@ import com.flc.framework.BaseApp;
 
 public class DrawableColorProcessor {
 
+    public Drawable frameDrawable(@ColorRes int colorRes, int cornersPx, int strokeWidthPx) {
+        Context context = BaseApp.getInstance();
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setStroke(strokeWidthPx, ContextCompat.getColor(context, colorRes));
+        drawable.setCornerRadius(cornersPx);
+        return drawable;
+    }
+
     public Drawable colorDrawable(@DrawableRes int drawableRes, @ColorRes int colorRes) {
         Context context = BaseApp.getInstance();
         Drawable drawable = ContextCompat.getDrawable(context, drawableRes);

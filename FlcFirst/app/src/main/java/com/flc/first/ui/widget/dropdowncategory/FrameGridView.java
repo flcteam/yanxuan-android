@@ -1,4 +1,4 @@
-package com.flc.first.ui.widget.dropdowncategory.framegridview;
+package com.flc.first.ui.widget.dropdowncategory;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,8 +8,10 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -31,8 +33,6 @@ public class FrameGridView extends FrameLayout {
 
     private final int COLUMN_COUNT = 4;
     private final int SP_SIZE_ITEM_TEXT = 14;
-    private final int COLOR_TEXT = ContextCompat.getColor(App.getInstance(), R.color.black);
-    private final int COLOR_HIGHLIGHT_TEXT = ContextCompat.getColor(App.getInstance(), R.color.highlight_red);
 
     private int colorText, colorHighlightText;
     private int itemHeight, itemWidth;
@@ -43,6 +43,8 @@ public class FrameGridView extends FrameLayout {
     private int measuredWidth, measuredHeight;
     private IDropDownCategoryProvider dataProvider;
     private Drawable frame, highlightFrame;
+
+    private int highlightIndex = 0;
 
     public FrameGridView(@NonNull Context context) {
         super(context);
@@ -68,9 +70,9 @@ public class FrameGridView extends FrameLayout {
 
     //============================ init ================================================
     private void init() {
-        setBackgroundColor(Color.YELLOW);
         initVars();
         onCreateView();
+        setHighlight(0);
     }
 
     private void initVars() {
@@ -81,8 +83,8 @@ public class FrameGridView extends FrameLayout {
         textHorizontalPaddingSize = SingletonFactory.getSingleton(SizeProcessor.class).dp2px(4);
         textVerticalPaddingSize = SingletonFactory.getSingleton(SizeProcessor.class).dp2px(3);
 
-        frame = SingletonFactory.getSingleton(DrawableColorProcessor.class).colorDrawable(R.drawable.round_10, R.color.c333333);
-        highlightFrame = SingletonFactory.getSingleton(DrawableColorProcessor.class).colorDrawable(R.drawable.round_10, R.color.highlight_red);
+        frame = SingletonFactory.getSingleton(DrawableColorProcessor.class).frameDrawable(R.color.c333333, 8, 1);
+        highlightFrame = SingletonFactory.getSingleton(DrawableColorProcessor.class).frameDrawable(R.color.highlight_red, 8, 1);
 
         Paint paint = new Paint();
         paint.setTextSize(SingletonFactory.getSingleton(SizeProcessor.class).dp2px(SP_SIZE_ITEM_TEXT));
@@ -99,7 +101,7 @@ public class FrameGridView extends FrameLayout {
     }
 
     private void onCreateView() {
-        int size = null == dataProvider.getDropDownCategoryData() ? 0 : dataProvider.getDropDownCategoryData().size();
+        int size = getCount();
         for (int i = 0; i < size; i++) {
             addItemGridView(dataProvider.getDropDownCategoryData().get(i), i);
         }
@@ -109,9 +111,11 @@ public class FrameGridView extends FrameLayout {
         TextView textView = new TextView(getContext());
         textView.setTextSize(SP_SIZE_ITEM_TEXT);
         textView.setGravity(Gravity.CENTER);
-//        textView.setBackground(frame);
+        textView.setBackground(frame);
         textView.setTextColor(colorText);
         textView.setText(content);
+        textView.setSingleLine();
+        textView.setEllipsize(TextUtils.TruncateAt.END);
 
         int x = position % COLUMN_COUNT;
         int y = (int) Math.floor(position / (float) COLUMN_COUNT);
@@ -120,6 +124,18 @@ public class FrameGridView extends FrameLayout {
         params.leftMargin = (x + 1) * horizontalPaddingSize + x * itemWidth;
         params.topMargin = (y + 1) * verticalPaddingSize + y * itemHeight;
         addView(textView, params);
+    }
+
+    public void setHighlight(int index) {
+        this.highlightIndex = index;
+        int count = getCount();
+        for (int i = 0; i < count; i++) {
+            View view = getChildAt(i);
+            if (view instanceof TextView) {
+                ((TextView) view).setTextColor(i == index ? colorHighlightText : colorText);
+            }
+            view.setBackground(i == index ? highlightFrame : frame);
+        }
     }
 
     //============================ override from View/ViewGroup ================================================
@@ -136,5 +152,9 @@ public class FrameGridView extends FrameLayout {
     //============================ getters and setters ================================================
     private int getCount() {
         return null == dataProvider || null == dataProvider.getDropDownCategoryData() ? 0 : dataProvider.getDropDownCategoryData().size();
+    }
+
+    public int[] getPreMeasuredSize() {
+        return new int[] {measuredWidth, measuredHeight};
     }
 }

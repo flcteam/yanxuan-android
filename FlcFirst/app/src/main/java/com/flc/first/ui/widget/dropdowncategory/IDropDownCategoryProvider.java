@@ -10,4 +10,6 @@ public interface IDropDownCategoryProvider {
 
     public List<String> getDropDownCategoryData();
 
+    public String getTitle();
+
 }
