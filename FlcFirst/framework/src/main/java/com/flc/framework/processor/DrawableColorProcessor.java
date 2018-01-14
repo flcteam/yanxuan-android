@@ -1,6 +1,7 @@
 package com.flc.framework.processor;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -23,6 +24,13 @@ public class DrawableColorProcessor {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setStroke(strokeWidthPx, ContextCompat.getColor(context, colorRes));
         drawable.setCornerRadius(cornersPx);
+        return drawable;
+    }
+
+    public Drawable horizontalGradientDrawable(@ColorRes int leftColorRes, @ColorRes int rightColorRes) {
+        Context context = BaseApp.getInstance();
+        int[] colors = new int[]{ContextCompat.getColor(context, leftColorRes), ContextCompat.getColor(context, rightColorRes)};
+        GradientDrawable drawable =  new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
         return drawable;
     }
 

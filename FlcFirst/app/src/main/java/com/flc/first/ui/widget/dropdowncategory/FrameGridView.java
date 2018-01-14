@@ -157,4 +157,5 @@ public class FrameGridView extends FrameLayout {
     public int[] getPreMeasuredSize() {
         return new int[] {measuredWidth, measuredHeight};
     }
+
 }
